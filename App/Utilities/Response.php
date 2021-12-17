@@ -142,7 +142,7 @@ class Response{
         self::setHeaders($status_code);
         // prepare response data
         $response = [
-            'http_status' => '' ,
+            'http_status' => $status_code ,
             'http_message' => self::StatusTexts[$status_code] ,
             'data' => $data
         ];
@@ -161,7 +161,7 @@ class Response{
         //header("Access-Control-Allow-Mehtods: GET,POST,PUT,DELETE");
         header("Access-Control-Max-Age: 3600");
         header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization");
-        header("HTTP/1.1 $status_code ". self::StatusTexts['$status_code']);
+        header("HTTP/1.1 $status_code ". self::StatusTexts[$status_code]);
 
     }
 }
