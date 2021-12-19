@@ -1,2 +1,2 @@
 # iran-state-api
-this an api for iran state 
+this is an api for iran state 
