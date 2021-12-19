@@ -8,7 +8,7 @@ require realpath('../../../vendor/autoload.php');
 
 
 
-$db_config = include realpath('../../../database/config.php');
+$db_config = include realpath('../../../config/database.php');
 
 $database = new Medoo($db_config);
 
