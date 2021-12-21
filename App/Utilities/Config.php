@@ -4,7 +4,7 @@ namespace App\Utilities;
 
 class Config {
 
-    const CONFIG_PATH = './../../config';
+    const CONFIG_PATH = '../../../config/';
 
 
     public static function load ($configFile)

@@ -11,7 +11,7 @@ class Database
     protected static $config;
   
     protected $connection;
-    protected function __construct()
+    public function __construct()
     {
          self::$config = Config::load($this->configeFileName);
          $this->connection = new Medoo(self::$config);
