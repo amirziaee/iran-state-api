@@ -21,25 +21,28 @@ switch ($request_method) {
 
         $province_id = $_GET['province_id'] ?? null;
         // validate data
-        $reuest =  [
+        $request =  [
             'province_id' => $province_id
         ];
-        $response = $city_service->getCities($reuest);
+        $response = $city_service->getCities($request);
 
         Response::respondAndDie($response, Response::HTTP_OK);
 
     case 'POST':
         // validate data
-
         $response = $city_service->createCity($request_body);
-
         Response::respondAndDie($_POST, Response::HTTP_CREATED);
 
     case 'PUT':
-        Response::respondAndDie(['PUT Request '], Response::HTTP_OK);
+        [$city_id,$name] = [$request_body['city_id'],$request_body['name']];
+        $response = $city_service->changeCityName($name,$city_id);
+        Response::respondAndDie($response , Response::HTTP_OK);
 
     case 'DELETE':
-        Response::respondAndDie(['DELETE Request '], Response::HTTP_OK);
+       
+        $response = $city_service->deleteCity($request_body['city_id']);
+       
+        Response::respondAndDie($response , Response::HTTP_OK);
 
     default:
         Response::respondAndDie(['Invalid Request Method'], Response::HTTP_METHOD_NOT_ALLOWED);

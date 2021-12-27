@@ -20,13 +20,15 @@ class Crud extends Database
         return $this->connection->select($table, $columns, $where);
     }
     //update 
-    public function update()
+    public function update($table,$data,$where)
     {
         #code here
+        return $this->connection->update($table,$data,$where);
     }
     //delete
-    public function delete()
+    public function delete($table,$where)
     {
         #code here
+        return $this->connection->delete($table,$where);
     }
 }

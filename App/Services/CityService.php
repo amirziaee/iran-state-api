@@ -6,21 +6,45 @@ use App\Database\Crud;
 
 class CityService{
 
-    
+    private $database;
+
+    public function __construct()
+    {
+        $this->database = new Crud();
+    }
 
     public function getCities(array $data)
     {
-        $database = new Crud();
-        $result = $database->select('city','name', $data['province_id']);
+        
+        $result = $this->database->select('city','name', $data['province_id']);
         return $result;
         
     }
 
     public function createCity(array $data)
     {
-        $database = new Crud();
-        $result = $database->insert('city',$data);
+        
+        $result = $this->database->insert('city',$data);
         return $result;
         
     }
+
+    public function changeCityName(string $name, int $id)
+    {
+
+        $result = $this->database->update('city',['name' => $name],['id'=> $id]);
+        return $result;
+        
+    }
+
+    public function deleteCity(int $id)
+    {
+
+        $result = $this->database->delete('city',['id'=> $id]);
+        return $result;
+        
+    }
+
+
+
 }
