@@ -1,30 +1,39 @@
 <?php
 
-use App\Database\Crud;
+use App\Services\CityService;
 use App\Utilities\Response;
 
 require realpath('../../../vendor/autoload.php');
 
-$db_config = include realpath('../../../config/database.php');
+$city_service = new CityService();
 
-        
 
-$database = new Crud();
+
+
 
 
 $request_method = $_SERVER['REQUEST_METHOD'];
-$request_body = json_decode(file_get_contents('php://input'));
+$request_body = json_decode(file_get_contents('php://input'), true);
 
 switch ($request_method) {
 
     case 'GET':
-        $province_id = $_GET['province_id'] ?? null;
-        $data = $database->select('province');
 
-        Response::respondAndDie($data, Response::HTTP_OK);
+        $province_id = $_GET['province_id'] ?? null;
+        // validate data
+        $reuest =  [
+            'province_id' => $province_id
+        ];
+        $response = $city_service->getCities($reuest);
+
+        Response::respondAndDie($response, Response::HTTP_OK);
 
     case 'POST':
-        Response::respondAndDie($_POST, Response::HTTP_OK);
+        // validate data
+
+        $response = $city_service->createCity($request_body);
+
+        Response::respondAndDie($_POST, Response::HTTP_CREATED);
 
     case 'PUT':
         Response::respondAndDie(['PUT Request '], Response::HTTP_OK);
@@ -34,5 +43,4 @@ switch ($request_method) {
 
     default:
         Response::respondAndDie(['Invalid Request Method'], Response::HTTP_METHOD_NOT_ALLOWED);
-
 }
