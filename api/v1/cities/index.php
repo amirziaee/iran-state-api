@@ -17,6 +17,13 @@ $request_body = json_decode(file_get_contents('php://input'), true);
 
 switch ($request_method) {
 
+    /**
+     * for response we have to validate data if data exist create or update records
+     * and after that set correct resoponse like as update successfully response OK
+     * or validation process is incorrect response data is invalid
+     * 
+     */
+
     case 'GET':
 
         $province_id = $_GET['province_id'] ?? null;
@@ -34,14 +41,14 @@ switch ($request_method) {
         Response::respondAndDie($_POST, Response::HTTP_CREATED);
 
     case 'PUT':
+        // validate data
         [$city_id,$name] = [$request_body['city_id'],$request_body['name']];
         $response = $city_service->changeCityName($name,$city_id);
         Response::respondAndDie($response , Response::HTTP_OK);
 
     case 'DELETE':
-       
+       // validate data
         $response = $city_service->deleteCity($request_body['city_id']);
-       
         Response::respondAndDie($response , Response::HTTP_OK);
 
     default:
